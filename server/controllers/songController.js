@@ -3,7 +3,9 @@ import { UserDetails } from "../models/userDetails.js";
 
 export const createSong = async (req, res) => {
   const { name, thumbnail, track } = req.body;
-  const artist = req.user._id;
+  const artist = req.user?._id;
+
+  // console.log(artist)
 
   if (!name || !thumbnail || !track) {
     return res.send({
@@ -97,8 +99,10 @@ export const getAllSongs = async (req, res) => {
 
 export const getSpecificArtistSongs = async(req,res) =>{
   try {
-    const artistId = req.params;
+    const {artistId} = req.params;
     const artistExistOrNot = await UserDetails.findById(artistId)
+
+    // console.log(artistExistOrNot)
 
     if (!artistExistOrNot) {
       return res.status(301).send({
@@ -107,20 +111,52 @@ export const getSpecificArtistSongs = async(req,res) =>{
       })
     }
 
-    const songs = await SongDetails.find({artist:artistExistOrNot._id})
+    const songs = await SongDetails.find({artist:artistId})
     res.status(200).send({
       success: true,
-      songs:songs
+      songs:songs,
     })
   
-    res.status(200).send({
-      success: true,
-      song: songs,
-    });
+    
   } catch (error) {
     return res.status(500).send({
       success: false,
       message: "Error while fetching songs",
+      error: error,
+    });
+  }
+}
+
+
+
+
+
+
+
+export const getSingleSong = async(req,res) =>{
+  try {
+    const {songId} = req.params;
+    const songExistOrNot = await SongDetails.findById(songId)
+
+    console.log(songExistOrNot)
+
+    if (!songExistOrNot) {
+      return res.status(301).send({
+        success: false,
+        message: "Song does not exist"
+      })
+    }
+
+    res.status(200).send({
+      success: true,
+      song:songExistOrNot
+    })
+  
+    
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Error while fetching song",
       error: error,
     });
   }

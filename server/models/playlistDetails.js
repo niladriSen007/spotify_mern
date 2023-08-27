@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const songSchema = new mongoose.Schema(
+const playlistSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -12,22 +12,22 @@ const songSchema = new mongoose.Schema(
     },
     owner: {
       type: mongoose.Types.ObjectId,
-      ref: "userDetails",
+      ref: "UserDetail",
     },
     songs: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "songDetails",
+        ref: "SongDetail",
       },
     ],
     collaborators: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "userDetails",
+        ref: "UserDetail",
       },
     ],
   },
   { timestamps: true }
 );
 
-export const SongDetails = mongoose.model("SongDetail", songSchema);
+export const PlaylistDetails = mongoose.model("PlaylistDetail", playlistSchema);
