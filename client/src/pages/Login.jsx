@@ -1,13 +1,28 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import {BsFacebook} from "react-icons/bs"
-import {FcGoogle} from "react-icons/fc"
-import {SlSocialSpotify} from "react-icons/sl"
+import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BsFacebook } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+import { SlSocialSpotify } from "react-icons/sl";
 import LogoContainer from "../components/LogoContainer";
+import { login } from "../helperFunctions/login";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigateTo = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const selector = useSelector((state) => state.user);
+  console.log(selector);
+
+  const setCookie = useMemo(()=>{
+    document.cookie = `token=${selector?.currentUser?.user?.token}; expires=Thu, 31 Aug 2023 00:00:00 UTC; path=/`;
+  },[selector?.currentUser?.user])
+
+  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,16 +35,31 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here you can implement your authentication logic
-    console.log("Email:", email);
-    console.log("Password:", password);
+    login(dispatch, { email, password });
+
+
+    // console.log(selector?.currentUser?.user);
+
+    // if(selector?.currentUser?.user){
+    //   navigateTo("/")
+    // }
   };
+
+  useEffect(() => {
+    if (selector?.currentUser?.user) {
+      navigateTo("/");
+      setCookie
+    }
+  },[selector?.currentUser?.user]);
 
   return (
     <div className="  h-screen bg-black flex flex-col">
       <LogoContainer />
       <div className="justify-center items-center flex h-[80vh] ">
         <div className=" w-96 p-6 bg-black  rounded border-2 border-gray-800 shadow-2xl ">
-          <h2 className="text-3xl font-bold text-white text-center  py-6">Login</h2>
+          <h2 className="text-3xl font-bold text-white text-center  py-6">
+            Login
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -83,7 +113,12 @@ const Login = () => {
             >
               Login with Google <FcGoogle size={20} />
             </button>
-            <span className="px-12 md:px-16 text-xs md:text-md  text-white">Create New Account ? <Link to="/register" className="underline">Click here</Link></span>
+            <span className="px-12 md:px-16 text-xs md:text-md  text-white">
+              Create New Account ?{" "}
+              <Link to="/register" className="underline">
+                Click here
+              </Link>
+            </span>
           </form>
         </div>
       </div>

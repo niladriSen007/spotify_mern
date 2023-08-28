@@ -5,12 +5,23 @@ import {
   AiOutlineArrowRight,
   AiOutlineDown,
 } from "react-icons/ai";
+import { useEffect } from "react";
+import { publicRequest, userRequest } from "../../requestMethods";
+import { usePlaylist } from "../../hooks/usePlaylist";
+import { useSelector } from "react-redux";
 
-const playList = [];
+// const playList = [];
 
 const Leftbar = () => {
+
+  const selector = useSelector((state) => state.user);
+  const currentUser = selector?.currentUser?.user
+
+  const { playlist, setPlaylist } = usePlaylist();
+  //  console.log(playlist)
+
   return (
-    <div className="relative w-1/6 h-screen">
+    <div className=" w-1/6 h-screen sticky left-0 top-16 z-50">
       <div className=" p-5 h-screen flex flex-col gap-10 bg-gradient-to-t from-slate-900 to-black ">
         <div className="flex flex-col gap-3">
           <div className="flex items-end  gap-2 text-lg cursor-pointer hover:text-white transition-all duration-300">
@@ -40,9 +51,6 @@ const Leftbar = () => {
             </div>
           </div>
           <button className=" w-max rounded-full px-2 py-1 text-white bg-gray-800 hover:bg-gray-700 transition-all duration-300">
-            {playList?.length === 0 ? "+ Create Playlist" : "Playlist"}
-          </button>
-          <button className=" w-max rounded-full px-2 py-1 text-white bg-gray-800 hover:bg-gray-700 transition-all duration-300">
             💗 Liked Songs
           </button>
           <div className="flex items-start justify-between px-2">
@@ -54,6 +62,23 @@ const Leftbar = () => {
               Recent <AiOutlineDown size={14} />
             </span>
           </div>
+          <button className=" w-max rounded-full px-2 py-1 text-white bg-gray-800 hover:bg-gray-700 transition-all duration-300">
+            {( currentUser && playlist.length !== 0) ? "Your Playlists"  : "+ Create Playlist"  }
+          </button>
+          {(playlist.length !== 0 && currentUser) && (
+            <div className="flex flex-col gap-4">
+              {playlist?.map((pl) => (
+                <div key={pl._id} className="flex items-center gap-3 cursor-pointer bg-gradient-to-r from-slate-900 to-blue-700 p-1 rounded-full w-60">
+                  <img
+                    src={pl?.thumbnail}
+                    alt=""
+                    className="w-12 p-1 h-12 rounded-full object-cover"
+                  />
+                  <span>{pl?.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="absolute p-3 flex flex-col  gap-3 pl-4 bottom-0 pt-6   border-gray-900 bg-gradient-to-rt from-slate-900 to-black w-full h-56">

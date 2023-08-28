@@ -1,13 +1,15 @@
-import React from "react";
-import { songs } from "../../constants/data";
+
 import SongCard from "./SongCard";
 
-const SongLists = () => {
+const SongLists = ({title,songs}) => {
   return (
-    <div className="flex items-center gap-8 p-6 pt-10">
-      {songs.map((song) => (
-         <SongCard key={song.id} song={song}/>
-      ))}
+    <div className="px-12 pt-10">
+      <h2 className="py-8 text-2xl font-bold text-white">{title}</h2>
+      <div className="grid grid-cols-4 place-items-center gap-24  w-max">
+        {songs?.map((song) => (
+          <SongCard key={song.id} song={song} />
+        ))}
+      </div>
     </div>
   );
 };

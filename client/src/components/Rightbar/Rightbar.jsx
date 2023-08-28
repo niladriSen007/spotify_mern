@@ -1,11 +1,12 @@
 import React from "react";
 import SongLists from "../songContainer/SongLists";
 import { AiFillPlayCircle } from "react-icons/ai";
+import { indiasTop, songs } from "../../constants/data";
 
 const Rightbar = () => {
   return (
     <div className="w-5/6 bg-gradient-to-t from-slate-900 to-black p-3">
-      <div className="flex justify-between items-start w-[70vw] bg-gradient-to-b from-blue-900 to-black p-4 ml-2 rounded-lg">
+      <div className="flex justify-between items-start w-[73vw] bg-gradient-to-b from-blue-800 to-black p-4 ml-2 rounded-lg">
         <img
           src="https://cutewallpaper.org/21/arijit-singh-wallpapers/70-Best-Arijit-singh-images-in-2019-My-love-song-Singer-.jpg"
           alt=""
@@ -26,7 +27,8 @@ const Rightbar = () => {
           </div>
         </div>
       </div>
-      <SongLists />
+      <SongLists title={"Today's Hits"} songs={songs}/>
+      <SongLists title={"India's Top Voice"} songs={indiasTop}/>
     </div>
   );
 };
