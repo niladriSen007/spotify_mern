@@ -6,6 +6,7 @@ import { SlSocialSpotify } from "react-icons/sl";
 import LogoContainer from "../components/LogoContainer";
 import { login } from "../helperFunctions/login";
 import { useDispatch, useSelector } from "react-redux";
+import { setLocalUser } from "../helperFunctions/setLocalUser";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,12 +17,14 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const selector = useSelector((state) => state.user);
-  console.log(selector);
 
-  const setCookie = useMemo(()=>{
-    document.cookie = `token=${selector?.currentUser?.user?.token}; expires=Thu, 31 Aug 2023 00:00:00 UTC; path=/`;
+
+
+
+
+  useEffect(()=>{
+    setLocalUser(selector)
   },[selector?.currentUser?.user])
-
   
 
   const handleEmailChange = (e) => {
@@ -48,7 +51,7 @@ const Login = () => {
   useEffect(() => {
     if (selector?.currentUser?.user) {
       navigateTo("/");
-      setCookie
+      // setCookie
     }
   },[selector?.currentUser?.user]);
 

@@ -5,8 +5,6 @@ import {
   AiOutlineArrowRight,
   AiOutlineDown,
 } from "react-icons/ai";
-import { useEffect } from "react";
-import { publicRequest, userRequest } from "../../requestMethods";
 import { usePlaylist } from "../../hooks/usePlaylist";
 import { useSelector } from "react-redux";
 
@@ -81,7 +79,7 @@ const Leftbar = () => {
           )}
         </div>
       </div>
-      <div className="absolute p-3 flex flex-col  gap-3 pl-4 bottom-0 pt-6   border-gray-900 bg-gradient-to-rt from-slate-900 to-black w-full h-56">
+      <div className="absolute px-8 flex flex-col gap-3 pl-4 bottom-0 pt-6   border-gray-900 bg-gradient-to-rt from-slate-900 to-black w-full h-56">
         <div className="grid grid-cols-4 gap-4">
           <span>Policy</span>
           <span>Legal</span>

@@ -91,10 +91,10 @@ export const loginUser = async (req, res) => {
     const userToken = await createJwtToken(userExistOrNot);
     const userWithToken = { ...userExistOrNot, token: userToken };
 
-    const { name: userName, email: userEmail } = userWithToken._doc;
+    const { name: userName, email: userEmail, _id: userId } = userWithToken._doc;
     const { token } = userWithToken;
 
-    const sharedUserDetails = { userName, userEmail, token };
+    const sharedUserDetails = { userId,userName, userEmail, token };
 
     res.status(200).send({
       success: true,
