@@ -97,8 +97,6 @@ export const getUsersAllPlaylist = async (req, res) => {
   }
 };
 
-
-
 export const addNewSongToPlaylist = async (req, res) => {
   try {
     const currentUser = req.user;
@@ -133,17 +131,20 @@ export const addNewSongToPlaylist = async (req, res) => {
       });
     }
 
-    const songExistInPlaylistOrNot =  playListExistOrNot?.songs.includes(songId);
-    console.log(songExistInPlaylistOrNot)
+    const songExistInPlaylistOrNot = playListExistOrNot?.songs.includes(songId);
+    console.log(songExistInPlaylistOrNot);
 
-    if ((playListExistOrNot?.owner.equals(currentUser?._id)) && (songExistInPlaylistOrNot === false)) {
+    if (
+      playListExistOrNot?.owner.equals(currentUser?._id) &&
+      songExistInPlaylistOrNot === false
+    ) {
       // console.log("Helloo");
       playListExistOrNot?.songs?.push(songId);
       await playListExistOrNot.save();
       res.status(200).send({
         success: true,
         playlist: playListExistOrNot,
-        message:"Song has been added to the playlist"
+        message: "Song has been added to the playlist",
       });
     } else {
       return res.status(500).send({
@@ -160,9 +161,6 @@ export const addNewSongToPlaylist = async (req, res) => {
     });
   }
 };
-
-
-
 
 export const removeNewSongToPlaylist = async (req, res) => {
   try {
@@ -198,17 +196,20 @@ export const removeNewSongToPlaylist = async (req, res) => {
       });
     }
 
-    const songExistInPlaylistOrNot =  playListExistOrNot?.songs.includes(songId);
-    console.log(songExistInPlaylistOrNot)
+    const songExistInPlaylistOrNot = playListExistOrNot?.songs.includes(songId);
+    console.log(songExistInPlaylistOrNot);
 
-    if ((playListExistOrNot?.owner.equals(currentUser?._id)) && (songExistInPlaylistOrNot === true)) {
+    if (
+      playListExistOrNot?.owner.equals(currentUser?._id) &&
+      songExistInPlaylistOrNot === true
+    ) {
       // console.log("Helloo");
       playListExistOrNot?.songs?.pop(songId);
       await playListExistOrNot.save();
       res.status(200).send({
         success: true,
         playlist: playListExistOrNot,
-        message:"Song has been deleted from playlist"
+        message: "Song has been deleted from playlist",
       });
     } else {
       return res.status(500).send({
@@ -217,6 +218,39 @@ export const removeNewSongToPlaylist = async (req, res) => {
         error: error,
       });
     }
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Song does not exist in the playlist",
+      error: error,
+    });
+  }
+};
+
+export const getPlaylistByUserId = async (req, res) => {
+  try {
+    const {userId} = req.params;
+    console.log(userId)
+    if (!userId)
+      return res.send({
+        error: "Please provide all required fields.",
+        missingFields: {
+          userId: !userId,
+        },
+      });
+
+      const playlistDetails = await PlaylistDetails.find({owner:userId})
+      if (!playlistDetails) {
+        return res.status(301).send({
+          success: false,
+          message: "No Playlist exists",
+        });
+      }
+      res.status(200).send({
+        success: true,
+        playlist: playlistDetails,
+        message: "Here is your playlist ",
+      });
   } catch (error) {
     return res.status(500).send({
       success: false,
