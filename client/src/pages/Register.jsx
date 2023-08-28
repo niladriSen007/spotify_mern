@@ -1,8 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import LogoContainer from "../components/LogoContainer";
 import { SlSocialSpotify } from "react-icons/sl";
+import { register } from "../helperFunctions/register";
+import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,11 @@ const Register = () => {
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch()
+
+  const selector = useSelector(state=>state.user)
+  console.log(selector)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +27,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userDetails = await axios.post(`/auth/register`, formData);
-    console.log(userDetails.data);
+    
+    register(dispatch,formData)
   };
 
   return (
