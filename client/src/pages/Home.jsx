@@ -4,7 +4,7 @@ import Rightbar from "../components/Rightbar/Rightbar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 // import { useEffect } from "react";
-// import { userRequest } from "../requestMethods";
+import { usePlaylist } from "../hooks/usePlaylist";
 
 
 const Home = () => {
@@ -18,11 +18,13 @@ const Home = () => {
   //   fetchPlayList()
   // },[])
 
+  const { playlist, setPlaylist } = usePlaylist();
+
   return (
     <div>
       <Navbar />
       <div className="flex bg-black text-gray-400 gap-1">
-        <Leftbar />
+        <Leftbar playlist={playlist} setPlaylist={setPlaylist}/>
         <Rightbar />
       </div>
       {/* <Footer /> */}

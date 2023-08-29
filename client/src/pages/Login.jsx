@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import {useCookies} from 'react-cookie'
 import { Link, useNavigate } from "react-router-dom";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
@@ -12,6 +13,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [cookie,setCookie] = useCookies(["userToken"])
+
   const navigateTo = useNavigate();
 
   const dispatch = useDispatch();
@@ -24,6 +27,10 @@ const Login = () => {
 
   useEffect(()=>{
     setLocalUser(selector)
+    const date = new Date()
+    date.setDate(date.getDate() + 30)
+    // console.log(selector?.currentUser?.user)
+    setCookie("userToken",selector?.currentUser?.user?.token,{path:"/",expires:date})
   },[selector?.currentUser?.user])
   
 
@@ -53,7 +60,7 @@ const Login = () => {
       navigateTo("/");
       // setCookie
     }
-  },[selector?.currentUser?.user]);
+  },[selector?.currentUser?.user,navigateTo]);
 
   return (
     <div className="  h-screen bg-black flex flex-col">

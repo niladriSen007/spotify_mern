@@ -59,7 +59,7 @@ export const indiasTop = [
         name:"Shayad",
         thumbnail:"https://i1.sndcdn.com/artworks-YSbyYVyz7OXMwj9U-toIlTA-t500x500.jpg",
         track:"Shayad(Love Aaj Kal)",
-        artist:"Amit Trivedi"
+        artist:"Arijit singh"
     },
     {
         id:3,

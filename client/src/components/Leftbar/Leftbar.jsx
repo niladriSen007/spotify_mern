@@ -7,10 +7,13 @@ import {
 } from "react-icons/ai";
 import { usePlaylist } from "../../hooks/usePlaylist";
 import { useSelector } from "react-redux";
-
+import {useCookies} from 'react-cookie'
 // const playList = [];
 
 const Leftbar = () => {
+
+
+
 
   const selector = useSelector((state) => state.user);
   const currentUser = selector?.currentUser?.user
@@ -76,7 +79,7 @@ const Leftbar = () => {
                 </div>
               ))}
             </div>
-          )}
+          ) }
         </div>
       </div>
       <div className="absolute px-8 flex flex-col gap-3 pl-4 bottom-0 pt-6   border-gray-900 bg-gradient-to-rt from-slate-900 to-black w-full h-56">
