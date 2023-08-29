@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LogoContainer from "../components/LogoContainer";
 import { SlSocialSpotify } from "react-icons/sl";
 import { register } from "../helperFunctions/register";
@@ -13,6 +13,7 @@ const Register = () => {
   });
 
   const dispatch = useDispatch()
+  const navigateTo = useNavigate()
 
   const selector = useSelector(state=>state.user)
   console.log(selector)
@@ -29,7 +30,16 @@ const Register = () => {
     e.preventDefault();
     
     register(dispatch,formData)
+    
   };
+
+
+  useEffect(() => {
+    if (selector?.currentUser?.user) {
+      navigateTo("/login");
+      // setCookie
+    }
+  },[selector?.currentUser?.user,navigateTo]);
 
   return (
     <div className="h-[100vh] bg-black flex flex-col ">

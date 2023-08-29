@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@keyframes borderAnimation {
+    0% {
+      border-color: #fca5a5; /* Initial border color */
+    }
+    50% {
+      border-color: #6ee7b7; /* Midpoint border color */
+    }
+    100% {
+      border-color: #93c5fd; /* Final border color */
+    }
+  }
