@@ -10,8 +10,11 @@ import {
 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { hideUpload } from "../../store/slices/uploadSongSlice";
+import CloudinaryUpload from "../CloudinaryUpload";
 
 const Rightbar = () => {
+
+  // console.log(window.cloudinary)
   const [playSong, setPlaySong] = useState(true);
 
   const selector = useSelector((state) => state?.upload);
@@ -56,6 +59,7 @@ const Rightbar = () => {
                 />
               </div>
             </form>
+              <CloudinaryUpload />
           </div>
           <button
             className="absolute top-28 right-96 text-white text-2xl z-50"
