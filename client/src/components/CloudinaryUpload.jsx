@@ -1,7 +1,7 @@
 import { openUploadWidget } from "../utils/CloudinaryService";
 
 
-const CloudinaryUpload = () => {
+const CloudinaryUpload = ({setSongUrl,setUploadedSongFileName}) => {
   const uploadSongWidget = () => {
     let myUploadWidget = openUploadWidget(
       {
@@ -11,7 +11,9 @@ const CloudinaryUpload = () => {
       },
       function (error, result) {
         if (!error && result.event === "success") {
-          console.log(result?.info)
+          // console.log(result?.info)
+          setSongUrl(result?.info?.secure_url)
+          setUploadedSongFileName(result?.info?.original_filename)
         }else{
             if(error)
                 console.log(error)
@@ -23,7 +25,7 @@ const CloudinaryUpload = () => {
 
   return (
     <button className="  bg-green-600  px-2 py-1 rounded-md text-white ml-8" onClick={uploadSongWidget}>
-      Upload Song
+      Click to upload track
     </button>
   );
 };

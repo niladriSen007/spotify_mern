@@ -25,7 +25,7 @@ export const songs = [
         name:"Tere Vaaste",
         thumbnail:"https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/33/03/f2/3303f270-fce2-293a-5bfc-4b9de994abf9/197188946401.jpg/600x600bf-60.jpg",
         track:"Tere Vaaste(Zara Hatke Zara Bachke)",
-        artist:"Amit Trivedi"
+        artist:"Sachin Jigar"
     },
     // {
     //     id:5,
