@@ -8,6 +8,7 @@ import {
 import { usePlaylist } from "../../hooks/usePlaylist";
 import { useSelector } from "react-redux";
 import {useCookies} from 'react-cookie'
+import { Link } from "react-router-dom";
 // const playList = [];
 
 const Leftbar = () => {
@@ -27,7 +28,7 @@ const Leftbar = () => {
         <div className="flex flex-col gap-3">
           <div className="flex items-end  gap-2 text-lg cursor-pointer hover:text-white transition-all duration-300">
             <AiFillHome size={36} />
-            <span>Home</span>
+            <Link to="/">Home</Link>
           </div>
           <div className="flex items-center gap-2 text-lg cursor-pointer hover:text-white transition-all duration-300">
             <AiOutlineSearch size={36} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SongLists from "../songContainer/SongLists";
 import { AiFillPlayCircle } from "react-icons/ai";
-import { indiasTop, songs } from "../../constants/data";
+import { Howl, Howler } from "howler";
 import {
   BsFillArrowLeftCircleFill,
   BsPauseCircleFill,
@@ -13,6 +13,7 @@ import { hideUpload } from "../../store/slices/uploadSongSlice";
 import CloudinaryUpload from "../CloudinaryUpload";
 import { userRequest } from "../../requestMethods";
 import { postSong } from "../../helperFunctions/postSong";
+import { setSongUrlNew } from "../../store/slices/songSlice";
 
 const Rightbar = () => {
   // console.log(window.cloudinary)
@@ -20,7 +21,6 @@ const Rightbar = () => {
     name: "",
     thumbnail: "",
   });
-  const [playSong, setPlaySong] = useState(true);
   const [songUrl, setSongUrl] = useState();
   const [playListUrl, setPlayListUrl] = useState(true);
   const [uploadedSongFileName, setUploadedSongFileName] = useState();
@@ -31,16 +31,18 @@ const Rightbar = () => {
     track: "",
   });
 
-  const [selectedSong, setSelectedSong] = useState({});
+  const [selectedSong, setSelectedSong] = useState();
 
   const selector = useSelector((state) => state?.upload);
   const song = useSelector((state) => state?.song);
+  const activeSongUrl = useSelector((state) => state?.song?.songUrl);
   console.log(song?.songId);
 
   const fetchSingleSong = async () => {
     const { data } = await userRequest.get(`/song/get/song/${song?.songId}`);
     console.log(data?.song);
     setSelectedSong(data?.song);
+    dispatch(setSongUrlNew(data?.song?.track));
   };
 
   useEffect(() => {
@@ -71,6 +73,7 @@ const Rightbar = () => {
     }));
     setUploadedSongFileName("");
     setSongData({});
+    dispatch(setSongUrlNew(songUrl));
     setSongUrl("");
     // console.log(songDetails)
 
@@ -83,6 +86,38 @@ const Rightbar = () => {
     postSong(songDetails);
   }, [songDetails]);
   // console.log(uploadedSongFileName)
+
+  const [playSong, setPlaySong] = useState();
+  const [showPlaySong, setShowPlaySong] = useState(false);
+
+
+  const playSongFunc = () => {
+    setShowPlaySong(true)
+    if (playSong) {
+      playSong.stop();
+    }
+
+    let sound = new Howl({
+      src: [activeSongUrl],
+      html5: true,
+    });
+    setPlaySong(sound);
+    sound.play();
+  };
+
+
+  const pauseSongFunc = () => {
+    playSong.pause();
+    setShowPlaySong(false)
+  };
+
+  // useEffect(()=>{
+  //   playSongFunc()
+  // },[])
+
+
+
+
   return (
     <div className="w-5/6 bg-gradient-to-t from-slate-900 to-black p-3 pl-5 flex relative">
       {selector?.uploadComponent && (
@@ -178,30 +213,39 @@ const Rightbar = () => {
             </div>
           </div>
         </div>
-        <SongLists title={"Today's Hits"} songs={songs} />
-        <SongLists title={"India's Top Voice"} songs={indiasTop} />
+        <SongLists title={"Today's Hits"} />
+        <SongLists title={"India's Top Voice"} />
       </div>
-      {selectedSong  ? (
-        <div className="flex flex-col gap-3 px-3 pt-3 rounded-md bg-gradient-to-b from-blue-900 to-black h-[70vh] sticky top-20 right-0">
+      {selectedSong && (
+        <div
+          className={`flex flex-col gap-3 px-3 pt-3 rounded-md bg-gradient-to-b from-blue-800 to-black h-[70vh] ${
+            selectedSong ? "sticky" : "hidden"
+          } top-20 right-0`}
+        >
           <img className="rounded-t-md" src={selectedSong?.thumbnail} alt="" />
           <div className="p-2 flex flex-col gap-2">
             <h2 className="text-white font-bold">{selectedSong?.name}</h2>
             <p>{selectedSong?.name?.split("-")[1]}</p>
             <div className="flex items-center justify-between pt-6 px-8">
               <BsFillArrowLeftCircleFill size={36} />
-              {playSong ? (
+              {showPlaySong ? (
                 <BsPauseCircleFill
                   size={36}
                   className="text-green-500 cursor-pointer"
-                  onClick={() => setPlaySong(false)}
+                  onClick={pauseSongFunc}
                 />
               ) : (
                 <BsFillPlayCircleFill
                   size={36}
                   className="text-green-500 cursor-pointer"
-                  onClick={() => setPlaySong(true)}
+                  onClick={playSongFunc}
                 />
               )}
+              {/* <BsPauseCircleFill
+                size={36}
+                className="text-green-500 cursor-pointer"
+                onClick={playSongFunc}
+              /> */}
               <BsFillArrowRightCircleFill size={36} />
             </div>
             <div className="w-48 my-8 ml-6 bg-gray-400 h-1 relative">
@@ -211,7 +255,7 @@ const Rightbar = () => {
             </div>
           </div>
         </div>
-      ) : <h2>Select song to play</h2>}
+      )}
     </div>
   );
 };

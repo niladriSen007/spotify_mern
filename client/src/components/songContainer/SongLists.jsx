@@ -1,10 +1,7 @@
-
-import { useEffect } from "react";
-import { publicRequest, userRequest } from "../../requestMethods";
 import SongCard from "./SongCard";
 import { useFetchSongs } from "../../hooks/useFetchSongs";
 
-const SongLists = ({title,songs}) => {
+const SongLists = ({title}) => {
 
   const songsList = useFetchSongs()
   // console.log(songsList)
