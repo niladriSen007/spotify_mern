@@ -3,10 +3,22 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useSelector } from "react-redux";
+import SingleSongPage from "./pages/SingleSongPage";
+import Navbar from "./components/Navbar";
 
 const App = () => {
 
   const selector = useSelector(state=>state.user)
+
+  // const Layout = () => (
+  //   <div>
+  //     <Navbar />
+  //     <div style={{ flex: "4" }}>
+  //       <Outlet />
+  //     </div>
+  //     <Footer />
+  //   </div>
+  // );
   const router = createBrowserRouter([
     {
       path:"/",
@@ -19,6 +31,10 @@ const App = () => {
     {
       path:"/register",
       element:<Register />
+    },
+    {
+      path:"/song/:songId",
+      element:<SingleSongPage />
     },
     {
       path:"*",
