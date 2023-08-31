@@ -10,6 +10,7 @@ import { UserDetails } from "./models/userDetails.js";
 import authRouter from "./router/auth.js";
 import songRouter from "./router/song.js";
 import playlistRouter from "./router/playlist.js";
+import likedSongsRouter from "./router/likedSongs.js";
 const app = express();
 const PORT = 5000;
 
@@ -55,6 +56,7 @@ passport.use(
 app.use("/auth", authRouter);
 app.use("/song", songRouter);
 app.use("/playlist", playlistRouter);
+app.use("/like", likedSongsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);

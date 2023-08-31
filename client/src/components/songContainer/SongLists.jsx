@@ -3,8 +3,13 @@ import { useFetchSongs } from "../../hooks/useFetchSongs";
 
 const SongLists = ({title}) => {
 
-  const songsList = useFetchSongs()
+  let songsList = useFetchSongs()
   // console.log(songsList)
+
+  if(title == "India's Top Voice")
+    songsList = songsList?.slice(4)
+  else
+    songsList = songsList?.slice(0,4)
 
   
 
@@ -13,7 +18,7 @@ const SongLists = ({title}) => {
       <h2 className="py-8 text-2xl font-bold text-white">{title}</h2>
       <div className="grid grid-cols-4 place-items-center gap-20  w-max">
         {songsList?.map((song) => (
-          <SongCard key={song.id} song={song} />
+          <SongCard key={song._id} song={song} />
         ))}
       </div>
     </div>

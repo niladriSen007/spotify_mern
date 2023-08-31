@@ -6,7 +6,7 @@ const RecommendedSongs = () => {
     <div>
         <h2 className="text-white text-xl py-8">Recommended  - </h2>
       <div className="flex flex-col gap-6">
-        {songs?.map((song) => (
+        {songs.slice(0,6)?.map((song) => (
           <div key={song?._id} className="flex items-center  gap-2">
             <img
               className="w-16 h-16 rounded-md"
