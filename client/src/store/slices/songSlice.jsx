@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   songId: null,
-  songUrl:null
+  songUrl:null,
+  likeSong:false
 }
 
 export const songSlice = createSlice({
@@ -15,10 +16,13 @@ export const songSlice = createSlice({
     setSongUrlNew(state,action){
         state.songUrl = action.payload;
     },
+    likeSongAddStatus(state,action){
+        state.likeSong = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setSongId,setSongUrlNew } = songSlice.actions
+export const { setSongId,setSongUrlNew,likeSongAddStatus } = songSlice.actions
 
 export default songSlice.reducer

@@ -5,7 +5,7 @@ const BASE_URL = "http://localhost:5000/";
 
 
 
-const TOKEN = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWEzOGZlY2I2NjdiMTFiZTA5OWI4NSIsImlhdCI6MTY5MzI0OTA5MywiZXhwIjoxNjk0NDU4NjkzfQ.gZS_Y63HIwicQ0pYV_AembBr9Gkj7pfE6fBSbsW0isI`
+const TOKEN = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWEzOGZlY2I2NjdiMTFiZTA5OWI4NSIsImlhdCI6MTY5MzQ3NzM1MywiZXhwIjoxNjk0Njg2OTUzfQ.n89GfSY-mlAgvyRksPMHSqV9hIDc7EfYFAWaADdXRtY`
 
 
 // function getCookie(name) {

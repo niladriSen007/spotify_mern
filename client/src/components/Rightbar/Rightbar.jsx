@@ -90,33 +90,31 @@ const Rightbar = () => {
   const [playSong, setPlaySong] = useState();
   const [showPlaySong, setShowPlaySong] = useState(false);
 
+  const user = useSelector((state) => state?.currentUser?.user);
 
   const playSongFunc = () => {
-    setShowPlaySong(true)
-    if (playSong) {
-      playSong.stop();
+
+      setShowPlaySong(true);
+      if (playSong) {
+        playSong.stop();
+      }
+
+      let sound = new Howl({
+        src: [activeSongUrl],
+        html5: true,
+      });
+      setPlaySong(sound);
+      sound.play();
     }
-
-    let sound = new Howl({
-      src: [activeSongUrl],
-      html5: true,
-    });
-    setPlaySong(sound);
-    sound.play();
-  };
-
 
   const pauseSongFunc = () => {
     playSong.pause();
-    setShowPlaySong(false)
+    setShowPlaySong(false);
   };
 
   // useEffect(()=>{
   //   playSongFunc()
   // },[])
-
-
-
 
   return (
     <div className="w-5/6 bg-gradient-to-t from-slate-900 to-black p-3 pl-5 flex relative">
