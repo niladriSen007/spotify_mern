@@ -63,6 +63,8 @@ const Leftbar = () => {
   // console.log(songDetailArray)
 
   console.log(allLikedSongs);
+  console.log(allLikedSongs);
+  console.log(allLikedSongs);
 
   // const songDetail = useMemo(()=>{
   //   const likedSongDetail = fetchSong
